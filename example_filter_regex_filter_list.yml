@@ -1,0 +1,16 @@
+---
+- name: Example for filter regex_filter_list
+  hosts: localhost
+  tasks:
+    - set_fact:
+        filter: ["han.*"]
+        data_list: 
+          - {"name": "hans", "other": "value 1"}
+          - {"name": "haro", "other": "value 2"}
+          - {"name": "franz", "other": "value 3"}
+
+    - name: Filter by name
+      debug: msg="{{ data_list | regex_filter_list('name', filter, False) }}"
+
+    - name: Negate filter by name
+      debug: msg="{{ data_list | regex_filter_list('name', filter, True) }}"
